@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CategoryMapper">
+    <!-- 定义结果映射 -->
+    <resultMap id="UserResultMap" type="com.example.pojo.Category">
+        <id column="id" property="id" />
+        <result column="user_ill_pic" property="user_ill_pic" />
+        <result column="user_ill_res" property="user_ill_res" />
+        <result column="doc_dia" property="doc_dia" />
+        <result column="doc_nam" property="doc_nam" />
+        <result column="patientName" property="patientName" />
+        <result column="create_time" property="create_time" />
+        <result column="update_time" property="update_time" />
+        <result property="extraName" column="name"/>
+        <result property="extraSex" column="sex"/>
+    </resultMap>
+
+    <!-- 定义查询语句 -->
+    <select id="list" resultMap="UserResultMap">
+        SELECT c.id, c.patientName, c.user_ill_pic, c.user_ill_res, c.create_time, c.update_time,c.doc_dia,c.doc_nam, u.name as extraName, u.sex as extraSex
+        FROM category c
+                 JOIN user u ON c.patientName = u.id
+        WHERE c.patientName = #{userId}
+    </select>
+</mapper>
